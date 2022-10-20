@@ -3,12 +3,14 @@ param location string
 param keyVaultName string
 param tenant string
 param AppServicspid string
+//param yorid string = 'marfha88_icloud.com#EXT#@KDRas.onmicrosoft.com'
 
 param tags object
 
 @description('service principal ids that gets access to the keyvault')
 param ids array = [
   AppServicspid
+  //yorid  
 ]
 
 resource SCEPmanVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {

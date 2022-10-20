@@ -3,7 +3,7 @@ param location string = resourceGroup().location
 
 
 @description('Tenant, Subscription and Resource Groups')
-param tenant string = 'c39d49f7-9eed-4307-b032-bb28f3cf9d79'
+param tenant string = '89c966d0-fc62-4a30-b104-cfcba0b97b07'
 
 
 @description('Name of the Company or Organization used for the Certificate Subject')
@@ -30,7 +30,7 @@ param license string = 'Trial' // change to your license
 
 // Key vault parameters
 @description('Specifies the name of the Azure Key Vault. The name of a Key Vault must be globally unique and contain only DNS-compatible characters (letters, numbers, and hyphens).')
-param keyVaultName string = 'kv-scepman-martin'
+param keyVaultName string = 'kv-scepman-martin4'
 
 //  Web app and app service plan
 @description(' AppService')

@@ -48,7 +48,9 @@ resource SCEPmanAppService 'Microsoft.Web/sites@2021-03-01' = {
   kind: 'app'
   location: location
   name: AppServiceName
-  properties: {}  
+  properties: {
+    serverFarmId: SCEPmanAppServicesplan.id
+  }  
   tags: tags
 }
 
