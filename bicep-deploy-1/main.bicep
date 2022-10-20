@@ -23,7 +23,7 @@ param tags object = {
 
 // Storage Account
 @description('Choose a globally unique name for your storage account. Storage account names must be between 3 and 24 characters in length and may contain numbers and lowercase letters only.')
-param storageAccountName string = 'scepmaninsa'
+param storageAccountName string = 'stgscepman'
 
 @description('Module parameters for storage accounts')
 param sku string = 'Standard_GRS'
