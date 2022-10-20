@@ -1,0 +1,82 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+  
+      "StorageAccountName": {
+        "type": "string",
+        "metadata": {
+          "description": "Name of the storage account"
+        }
+      },
+      "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Location where the resources will be deployed"
+        }
+      },
+      "resourceTags": {
+        "type": "object",
+        "metadata": {
+          "description": "Tags to be assigned to the created resources"
+        }
+      },
+      "tableContributorPrincipals": {
+        "type": "array",
+        "metadata": {
+          "description": "IDs of Principals that shall receive table contributor rights on the storage account"
+        }
+      }
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Storage/storageAccounts",
+        "apiVersion": "2021-04-01",
+        "name": "[parameters('StorageAccountName')]",
+        "location": "[parameters('location')]",
+        "tags": "[parameters('resourceTags')]",
+        "sku": {
+          "name": "Standard_LRS"
+        },
+        "kind": "StorageV2",
+        "properties": {
+          "accessTier": "Hot",
+          "allowBlobPublicAccess": false,
+          "allowCrossTenantReplication": false,
+          "allowSharedKeyAccess": false,
+          "isHnsEnabled": false,
+          "isNfsV3Enabled": false,
+          "minimumTlsVersion": "TLS1_2",
+          "routingPreference": {
+            "publishInternetEndpoints": false,
+            "publishMicrosoftEndpoints": false,
+            "routingChoice": "MicrosoftRouting"
+          },
+          "supportsHttpsTrafficOnly": true
+        }
+      },
+      {
+        "type": "Microsoft.Authorization/roleAssignments",
+        "apiVersion": "2022-04-01",
+        "name": "[guid(concat('roleAssignment-sa-',parameters('tableContributorPrincipals')[copyIndex()]))]",
+        "scope": "[concat('Microsoft.Storage/storageAccounts', '/', parameters('StorageAccountName'))]",
+        "dependsOn": [
+          "[parameters('StorageAccountName')]"
+        ],
+        "properties": {
+          "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]", //0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3 is Storage Table Data Contributor
+          "principalId": "[parameters('tableContributorPrincipals')[copyIndex()]]"
+        },
+        "copy": {
+          "name": "copy-storage-role-assignments",
+          "count": "[length(parameters('tableContributorPrincipals'))]"
+        }
+      }
+    ],
+    "outputs": {
+      "storageAccountTableUrl": {
+        "type": "string",
+        "value": "[reference(parameters('StorageAccountName')).primaryEndpoints.table]"
+      }
+    }
+  }
