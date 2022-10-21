@@ -2,24 +2,24 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "sites_as_scepman_martin_name": {
-            "defaultValue": "as-scepman-martin",
+        "sites_as_scepman_martin6_name": {
+            "defaultValue": "as-scepman-martin6",
             "type": "String"
         },
-        "sites_as_scepman_martin_cm_name": {
-            "defaultValue": "as-scepman-martin-cm",
+        "sites_as_scepman_martin6_cm_name": {
+            "defaultValue": "as-scepman-martin6-cm",
             "type": "String"
         },
-        "vaults_kv_scepman_martin_name": {
-            "defaultValue": "kv-scepman-martin",
+        "vaults_kv_scepman_martin6_name": {
+            "defaultValue": "kv-scepman-martin6",
             "type": "String"
         },
-        "serverfarms_asp_scepman_martin_name": {
-            "defaultValue": "asp-scepman-martin",
+        "serverfarms_asp_scepman_marti6_name": {
+            "defaultValue": "asp-scepman-marti6",
             "type": "String"
         },
-        "storageAccounts_stgscepmanmartin_name": {
-            "defaultValue": "stgscepmanmartin",
+        "storageAccounts_stgscepmanmartin6_name": {
+            "defaultValue": "stgscepmanmartin6",
             "type": "String"
         }
     },
@@ -28,7 +28,7 @@
         {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2022-07-01",
-            "name": "[parameters('vaults_kv_scepman_martin_name')]",
+            "name": "[parameters('vaults_kv_scepman_martin6_name')]",
             "location": "westeurope",
             "properties": {
                 "sku": {
@@ -39,7 +39,7 @@
                 "accessPolicies": [
                     {
                         "tenantId": "89c966d0-fc62-4a30-b104-cfcba0b97b07",
-                        "objectId": "51a2d479-11cc-49c4-86de-e081b7fde7ce",
+                        "objectId": "3b2c6480-d687-4689-af52-5fbe5d077794",
                         "permissions": {
                             "keys": [
                                 "Get",
@@ -89,7 +89,7 @@
                 "enabledForTemplateDeployment": false,
                 "enableSoftDelete": true,
                 "enablePurgeProtection": true,
-                "vaultUri": "[concat('https://', parameters('vaults_kv_scepman_martin_name'), '.vault.azure.net/')]",
+                "vaultUri": "[concat('https://', parameters('vaults_kv_scepman_martin6_name'), '.vault.azure.net/')]",
                 "provisioningState": "Succeeded",
                 "publicNetworkAccess": "Enabled"
             }
@@ -97,7 +97,7 @@
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2022-05-01",
-            "name": "[parameters('storageAccounts_stgscepmanmartin_name')]",
+            "name": "[parameters('storageAccounts_stgscepmanmartin6_name')]",
             "location": "westeurope",
             "sku": {
                 "name": "Standard_LRS",
@@ -142,7 +142,7 @@
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2022-03-01",
-            "name": "[parameters('serverfarms_asp_scepman_martin_name')]",
+            "name": "[parameters('serverfarms_asp_scepman_marti6_name')]",
             "location": "West Europe",
             "sku": {
                 "name": "S1",
@@ -166,11 +166,44 @@
             }
         },
         {
+            "type": "Microsoft.KeyVault/vaults/keys",
+            "apiVersion": "2022-07-01",
+            "name": "[concat(parameters('vaults_kv_scepman_martin6_name'), '/SCEPman-Root-CA-V1')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_kv_scepman_martin6_name'))]"
+            ],
+            "properties": {
+                "attributes": {
+                    "enabled": true,
+                    "nbf": 1666337387,
+                    "exp": 1981957187
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2022-07-01",
+            "name": "[concat(parameters('vaults_kv_scepman_martin6_name'), '/SCEPman-Root-CA-V1')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_kv_scepman_martin6_name'))]"
+            ],
+            "properties": {
+                "contentType": "application/x-pkcs12",
+                "attributes": {
+                    "enabled": true,
+                    "nbf": 1666337387,
+                    "exp": 1981957187
+                }
+            }
+        },
+        {
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "2022-05-01",
-            "name": "[concat(parameters('storageAccounts_stgscepmanmartin_name'), '/default')]",
+            "name": "[concat(parameters('storageAccounts_stgscepmanmartin6_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_stgscepmanmartin_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_stgscepmanmartin6_name'))]"
             ],
             "sku": {
                 "name": "Standard_LRS",
@@ -189,9 +222,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/fileServices",
             "apiVersion": "2022-05-01",
-            "name": "[concat(parameters('storageAccounts_stgscepmanmartin_name'), '/default')]",
+            "name": "[concat(parameters('storageAccounts_stgscepmanmartin6_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_stgscepmanmartin_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_stgscepmanmartin6_name'))]"
             ],
             "sku": {
                 "name": "Standard_LRS",
@@ -213,9 +246,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/queueServices",
             "apiVersion": "2022-05-01",
-            "name": "[concat(parameters('storageAccounts_stgscepmanmartin_name'), '/default')]",
+            "name": "[concat(parameters('storageAccounts_stgscepmanmartin6_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_stgscepmanmartin_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_stgscepmanmartin6_name'))]"
             ],
             "properties": {
                 "cors": {
@@ -226,9 +259,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/tableServices",
             "apiVersion": "2022-05-01",
-            "name": "[concat(parameters('storageAccounts_stgscepmanmartin_name'), '/default')]",
+            "name": "[concat(parameters('storageAccounts_stgscepmanmartin6_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_stgscepmanmartin_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_stgscepmanmartin6_name'))]"
             ],
             "properties": {
                 "cors": {
@@ -239,10 +272,10 @@
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2022-03-01",
-            "name": "[parameters('sites_as_scepman_martin_name')]",
+            "name": "[parameters('sites_as_scepman_martin6_name')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_asp_scepman_martin_name'))]"
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_asp_scepman_marti6_name'))]"
             ],
             "kind": "app",
             "identity": {
@@ -252,17 +285,17 @@
                 "enabled": true,
                 "hostNameSslStates": [
                     {
-                        "name": "[concat(parameters('sites_as_scepman_martin_name'), '.azurewebsites.net')]",
+                        "name": "[concat(parameters('sites_as_scepman_martin6_name'), '.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "hostType": "Standard"
                     },
                     {
-                        "name": "[concat(parameters('sites_as_scepman_martin_name'), '.scm.azurewebsites.net')]",
+                        "name": "[concat(parameters('sites_as_scepman_martin6_name'), '.scm.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "hostType": "Repository"
                     }
                 ],
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_asp_scepman_martin_name'))]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_asp_scepman_marti6_name'))]",
                 "reserved": false,
                 "isXenon": false,
                 "hyperV": false,
@@ -294,10 +327,10 @@
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2022-03-01",
-            "name": "[parameters('sites_as_scepman_martin_cm_name')]",
+            "name": "[parameters('sites_as_scepman_martin6_cm_name')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_asp_scepman_martin_name'))]"
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_asp_scepman_marti6_name'))]"
             ],
             "kind": "app",
             "identity": {
@@ -307,17 +340,17 @@
                 "enabled": true,
                 "hostNameSslStates": [
                     {
-                        "name": "[concat(parameters('sites_as_scepman_martin_cm_name'), '.azurewebsites.net')]",
+                        "name": "[concat(parameters('sites_as_scepman_martin6_cm_name'), '.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "hostType": "Standard"
                     },
                     {
-                        "name": "[concat(parameters('sites_as_scepman_martin_cm_name'), '.scm.azurewebsites.net')]",
+                        "name": "[concat(parameters('sites_as_scepman_martin6_cm_name'), '.scm.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "hostType": "Repository"
                     }
                 ],
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_asp_scepman_martin_name'))]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_asp_scepman_marti6_name'))]",
                 "reserved": false,
                 "isXenon": false,
                 "hyperV": false,
@@ -349,10 +382,10 @@
         {
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2022-03-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_name'), '/ftp')]",
+            "name": "[concat(parameters('sites_as_scepman_martin6_name'), '/ftp')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin6_name'))]"
             ],
             "properties": {
                 "allow": true
@@ -361,10 +394,10 @@
         {
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2022-03-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_cm_name'), '/ftp')]",
+            "name": "[concat(parameters('sites_as_scepman_martin6_cm_name'), '/ftp')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_cm_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin6_cm_name'))]"
             ],
             "properties": {
                 "allow": true
@@ -373,10 +406,10 @@
         {
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2022-03-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_name'), '/scm')]",
+            "name": "[concat(parameters('sites_as_scepman_martin6_name'), '/scm')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin6_name'))]"
             ],
             "properties": {
                 "allow": true
@@ -385,10 +418,10 @@
         {
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2022-03-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_cm_name'), '/scm')]",
+            "name": "[concat(parameters('sites_as_scepman_martin6_cm_name'), '/scm')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_cm_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin6_cm_name'))]"
             ],
             "properties": {
                 "allow": true
@@ -397,10 +430,10 @@
         {
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2022-03-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_name'), '/web')]",
+            "name": "[concat(parameters('sites_as_scepman_martin6_name'), '/web')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin6_name'))]"
             ],
             "properties": {
                 "numberOfWorkers": 1,
@@ -423,7 +456,7 @@
                 "acrUseManagedIdentityCreds": false,
                 "logsDirectorySizeLimit": 35,
                 "detailedErrorLoggingEnabled": false,
-                "publishingUsername": "$as-scepman-martin",
+                "publishingUsername": "$as-scepman-martin6",
                 "scmType": "None",
                 "use32BitWorkerProcess": false,
                 "webSocketsEnabled": false,
@@ -444,7 +477,7 @@
                 "vnetRouteAllEnabled": false,
                 "vnetPrivatePortsCount": 0,
                 "localMySqlEnabled": false,
-                "managedServiceIdentityId": 21740,
+                "managedServiceIdentityId": 34224,
                 "ipSecurityRestrictions": [
                     {
                         "ipAddress": "Any",
@@ -477,10 +510,10 @@
         {
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2022-03-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_cm_name'), '/web')]",
+            "name": "[concat(parameters('sites_as_scepman_martin6_cm_name'), '/web')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_cm_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin6_cm_name'))]"
             ],
             "properties": {
                 "numberOfWorkers": 1,
@@ -503,7 +536,7 @@
                 "acrUseManagedIdentityCreds": false,
                 "logsDirectorySizeLimit": 35,
                 "detailedErrorLoggingEnabled": false,
-                "publishingUsername": "$as-scepman-martin-cm",
+                "publishingUsername": "$as-scepman-martin6-cm",
                 "scmType": "None",
                 "use32BitWorkerProcess": true,
                 "webSocketsEnabled": false,
@@ -524,7 +557,7 @@
                 "vnetRouteAllEnabled": false,
                 "vnetPrivatePortsCount": 0,
                 "localMySqlEnabled": false,
-                "managedServiceIdentityId": 21739,
+                "managedServiceIdentityId": 34223,
                 "ipSecurityRestrictions": [
                     {
                         "ipAddress": "Any",
@@ -557,92 +590,28 @@
         {
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2022-03-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_name'), '/', parameters('sites_as_scepman_martin_name'), '.azurewebsites.net')]",
+            "name": "[concat(parameters('sites_as_scepman_martin6_name'), '/', parameters('sites_as_scepman_martin6_name'), '.azurewebsites.net')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin6_name'))]"
             ],
             "properties": {
-                "siteName": "as-scepman-martin",
+                "siteName": "as-scepman-martin6",
                 "hostNameType": "Verified"
             }
         },
         {
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2022-03-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_cm_name'), '/', parameters('sites_as_scepman_martin_cm_name'), '.azurewebsites.net')]",
+            "name": "[concat(parameters('sites_as_scepman_martin6_cm_name'), '/', parameters('sites_as_scepman_martin6_cm_name'), '.azurewebsites.net')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_cm_name'))]"
+                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin6_cm_name'))]"
             ],
             "properties": {
-                "siteName": "as-scepman-martin-cm",
+                "siteName": "as-scepman-martin6-cm",
                 "hostNameType": "Verified"
             }
-        },
-        {
-            "type": "Microsoft.Web/sites/snapshots",
-            "apiVersion": "2015-08-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_name'), '/2022-10-20T11_01_29_8069718')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Web/sites/snapshots",
-            "apiVersion": "2015-08-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_cm_name'), '/2022-10-20T11_01_29_8069718')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_cm_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Web/sites/snapshots",
-            "apiVersion": "2015-08-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_name'), '/2022-10-20T12_01_29_9584665')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Web/sites/snapshots",
-            "apiVersion": "2015-08-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_cm_name'), '/2022-10-20T12_01_29_9584665')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_cm_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Web/sites/snapshots",
-            "apiVersion": "2015-08-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_name'), '/2022-10-20T13_01_30_2869786')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Web/sites/snapshots",
-            "apiVersion": "2015-08-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_cm_name'), '/2022-10-20T13_01_30_2869786')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_cm_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Web/sites/snapshots",
-            "apiVersion": "2015-08-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_name'), '/2022-10-20T14_01_30_3583236')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Web/sites/snapshots",
-            "apiVersion": "2015-08-01",
-            "name": "[concat(parameters('sites_as_scepman_martin_cm_name'), '/2022-10-20T14_01_30_3583236')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_as_scepman_martin_cm_name'))]"
-            ]
         }
     ]
 }

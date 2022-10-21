@@ -25,9 +25,6 @@ param storageAccountName string = 'stgscepmanUNIQUENAME'
 @maxLength(40)
 param appServicePlanName string = 'asp-scepman-UNIQUENAME'
 
-@description('Provide the AppServicePlan ID of an existing App Service Plan. Keep default value \'none\' if you want to create a new one.')
-param existingAppServicePlanID string = 'none'
-
 @description('The SCEPman App Service and part of the default FQDN. Therefore, it must be globally unique and contain only DNS-compatible characters.')
 @maxLength(60)
 param primaryAppServiceName string = 'as-scepman-UNIQUENAME'
