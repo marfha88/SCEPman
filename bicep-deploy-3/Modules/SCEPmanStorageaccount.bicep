@@ -42,9 +42,6 @@ resource roleAssignment_sa_tableContributorPrincipals 'Microsoft.Authorization/r
     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')
     principalId: item
   }
-  dependsOn: [
-    StorageAccount
-  ]
 }]
 
 output storageAccountTableUrl string = StorageAccount.properties.primaryEndpoints.table

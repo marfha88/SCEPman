@@ -1,6 +1,6 @@
-param SCEPman_Health_check_alarm string = 'SCEPman Health check alerting'
-param AppServicid string = '/subscriptions/347c07c5-65f2-47dc-bb87-f3456120269a/resourceGroups/scepman-prod/providers/Microsoft.Web/sites/as-scepman-martin9'
-param SCEPman_ActionGroups_Id string = '/subscriptions/347c07c5-65f2-47dc-bb87-f3456120269a/resourceGroups/scepman-prod/providers/microsoft.insights/actionGroups/SCEPman Health probe'
+param SCEPman_Health_check_alarm string
+param AppServicid string
+param SCEPman_ActionGroups_Id string
 
 resource SCEPman_Health_check_alarm_resource 'microsoft.insights/metricAlerts@2018-03-01' = {
   name: SCEPman_Health_check_alarm
@@ -43,3 +43,5 @@ resource SCEPman_Health_check_alarm_resource 'microsoft.insights/metricAlerts@20
     ]
   }
 }
+
+

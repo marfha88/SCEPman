@@ -65,10 +65,10 @@ resource SCEPmanAppServiceconfig 'Microsoft.Web/sites/config@2022-03-01' = {
   kind: 'string'
   parent: SCEPmanAppService
   properties: {
-    /*'AppConfig:AuthConfig:ApplicationId': '1ad5feb7-bf97-4245-a84b-e87e41760d3e' // fil in after powershell script
+    /*'AppConfig:AuthConfig:ApplicationId': 'info from portal' // fil in after powershell script
     'AppConfig:AuthConfig:ManagedIdentityEnabledForWebsiteHostname': '${AppServiceName}.azurewebsites.net' // // fil in after powershell script
-    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': '1666346360' // // fil in after powershell script
-    'AppConfig:AuthConfig:ManagedIdentityPermissionLevel': '2' // // fil in after powershell script */
+    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': 'info from portal' // fil in after powershell script
+    'AppConfig:AuthConfig:ManagedIdentityPermissionLevel': '2' // fil in after powershell script */
     'AppConfig:AuthConfig:TenantId': subscription().tenantId
     'AppConfig:AzureStorage:TableStorageEndpoint': TableStorageEndpoint
     'AppConfig:BaseUrl': 'https://${AppServiceName}.azurewebsites.net/'
