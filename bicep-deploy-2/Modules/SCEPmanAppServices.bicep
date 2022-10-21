@@ -28,6 +28,9 @@ var ArtifactsLocationCertMaster = uri(artifactsRepositoryUrl, 'dist-certmaster/C
 var TableStorageEndpoint = 'https://${storageAccountName}.table.${environment().suffixes.storage}/'
 var KeyVaultURL = 'https://${keyVaultName}${environment().suffixes.keyvaultDns}/'
 
+// Application Insight
+param InstrumentationKey string
+param ConnectionString string
 
 //######################################################### Here Resource creation begin test #####################################################
 @description('SCEPmanAppServicesplan is created here')
@@ -145,15 +148,15 @@ resource SCEPmanAppServiceconfig 'Microsoft.Web/sites/config@2022-03-01' = {
   kind: 'string'
   parent: SCEPmanAppService
   properties: {
-    'AppConfig:AuthConfig:ApplicationId': '1ad5feb7-bf97-4245-a84b-e87e41760d3e'
-    'AppConfig:AuthConfig:ManagedIdentityEnabledForWebsiteHostname': '${AppServiceName}.azurewebsites.net'
-    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': '1666346360'
-    'AppConfig:AuthConfig:ManagedIdentityPermissionLevel': '2' //
+    'AppConfig:AuthConfig:ApplicationId': '1ad5feb7-bf97-4245-a84b-e87e41760d3e' // fil in after powershell script
+    'AppConfig:AuthConfig:ManagedIdentityEnabledForWebsiteHostname': '${AppServiceName}.azurewebsites.net' // fil in after powershell script
+    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': '1666346360' // fil in after powershell script
+    'AppConfig:AuthConfig:ManagedIdentityPermissionLevel': '2' // fil in after powershell script
     'AppConfig:AuthConfig:TenantId': subscription().tenantId
     'AppConfig:AzureStorage:TableStorageEndpoint': TableStorageEndpoint
     'AppConfig:BaseUrl': 'https://${AppServiceName}.azurewebsites.net/'
-    'AppConfig:CertificateStorage:TableStorageEndpoint': TableStorageEndpoint //
-    'AppConfig:CertMaster:URL': '${certificateMasterAppServiceName}.azurewebsites.net' //
+    'AppConfig:CertificateStorage:TableStorageEndpoint': TableStorageEndpoint // fil in after powershell script
+    'AppConfig:CertMaster:URL': '${certificateMasterAppServiceName}.azurewebsites.net' // fil in after powershell script
     'AppConfig:DirectCSRValidation:Enabled': 'true'
     'AppConfig:IntuneValidation:DeviceDirectory': 'AADAndIntune'
     'AppConfig:IntuneValidation:ValidityPeriodDays': '365'
@@ -165,7 +168,21 @@ resource SCEPmanAppServiceconfig 'Microsoft.Web/sites/config@2022-03-01' = {
     'AppConfig:UseRequestedKeyUsages': 'true'
     'AppConfig:ValidityClockSkewMinutes': '1440'
     'AppConfig:ValidityPeriodDays': '730'
-    WEBSITE_RUN_FROM_PACKAGE: ArtifactsLocationSCEPman
+    WEBSITE_RUN_FROM_PACKAGE: ArtifactsLocationSCEPman // Application insight
+    APPINSIGHTS_INSTRUMENTATIONKEY: InstrumentationKey // Application insight
+    APPLICATIONINSIGHTS_CONNECTION_STRING: ConnectionString // Application insight
+    APPINSIGHTS_PROFILERFEATURE_VERSION: '1.0.0' // Application insight
+    APPINSIGHTS_SNAPSHOTFEATURE_VERSION: '1.0.0' // Application insight
+    ApplicationInsightsAgent_EXTENSION_VERSION: '~2' // Application insight
+    'BackUp:AppConfig:AuthConfig:ApplicationId': '1ad5feb7-bf97-4245-a84b-e87e41760d3e' // The same as 'AppConfig:AuthConfig:ApplicationId' and also Application insight
+    DiagnosticServices_EXTENSION_VERSION: '~3' // Application insight
+    InstrumentationEngine_EXTENSION_VERSION: '~1' // Application insight
+    SnapshotDebugger_EXTENSION_VERSION: '~1' // Application insight
+    XDT_MicrosoftApplicationInsights_BaseExtensions: 'disabled' // Application insight
+    XDT_MicrosoftApplicationInsights_Java: '1' // Application insight
+    XDT_MicrosoftApplicationInsights_Mode: 'recommended' // Application insight
+    XDT_MicrosoftApplicationInsights_NodeJS: '1' // Application insight
+    XDT_MicrosoftApplicationInsights_PreemptSdk: 'disabled' // Application insight
    }
 }
 

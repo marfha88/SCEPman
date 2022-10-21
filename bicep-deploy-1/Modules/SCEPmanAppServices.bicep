@@ -65,15 +65,15 @@ resource SCEPmanAppServiceconfig 'Microsoft.Web/sites/config@2022-03-01' = {
   kind: 'string'
   parent: SCEPmanAppService
   properties: {
-    'AppConfig:AuthConfig:ApplicationId': '1ad5feb7-bf97-4245-a84b-e87e41760d3e'
-    'AppConfig:AuthConfig:ManagedIdentityEnabledForWebsiteHostname': '${AppServiceName}.azurewebsites.net'
-    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': '1666346360'
-    'AppConfig:AuthConfig:ManagedIdentityPermissionLevel': '2' //
+    /*'AppConfig:AuthConfig:ApplicationId': '1ad5feb7-bf97-4245-a84b-e87e41760d3e' // fil in after powershell script
+    'AppConfig:AuthConfig:ManagedIdentityEnabledForWebsiteHostname': '${AppServiceName}.azurewebsites.net' // // fil in after powershell script
+    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': '1666346360' // // fil in after powershell script
+    'AppConfig:AuthConfig:ManagedIdentityPermissionLevel': '2' // // fil in after powershell script */
     'AppConfig:AuthConfig:TenantId': subscription().tenantId
     'AppConfig:AzureStorage:TableStorageEndpoint': TableStorageEndpoint
     'AppConfig:BaseUrl': 'https://${AppServiceName}.azurewebsites.net/'
-    'AppConfig:CertificateStorage:TableStorageEndpoint': TableStorageEndpoint //
-    'AppConfig:CertMaster:URL': '${certificateMasterAppServiceName}.azurewebsites.net' //
+    // 'AppConfig:CertificateStorage:TableStorageEndpoint': TableStorageEndpoint // fil in after powershell script
+    // 'AppConfig:CertMaster:URL': '${certificateMasterAppServiceName}.azurewebsites.net' // fil in after powershell script
     'AppConfig:DirectCSRValidation:Enabled': 'true'
     'AppConfig:IntuneValidation:DeviceDirectory': 'AADAndIntune'
     'AppConfig:IntuneValidation:ValidityPeriodDays': '365'
@@ -114,10 +114,10 @@ resource SCEPmanAppServiceconfigCm 'Microsoft.Web/sites/config@2022-03-01' = {
   kind: 'string'
   parent: SCEPmanAppServiceCm
   properties: {
-    'AppConfig:AuthConfig:ApplicationId': '67792cb3-8f32-4b23-a618-c3054aa19fc4'
-    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': '1666346356'
-    'AppConfig:AuthConfig:ManagedIdentityPermissionLevel': '2'
-    'AppConfig:AuthConfig:SCEPmanAPIScope': 'api://1ad5feb7-bf97-4245-a84b-e87e41760d3e' //
+    /*'AppConfig:AuthConfig:ApplicationId': 'info from portal' // fil in after powershell script
+    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': 'info from portal' // fil in after powershell script
+    'AppConfig:AuthConfig:ManagedIdentityPermissionLevel': '2' // fil in after powershell script
+    'AppConfig:AuthConfig:SCEPmanAPIScope': 'info from portal' // fil in after powershell script */
     'AppConfig:AuthConfig:TenantId': subscription().tenantId
     'AppConfig:AzureStorage:TableStorageEndpoint': TableStorageEndpoint
     'AppConfig:SCEPman:URL': 'https://${AppServiceName}.azurewebsites.net/'

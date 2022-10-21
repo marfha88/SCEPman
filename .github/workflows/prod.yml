@@ -37,7 +37,7 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_PROD_SUBSCRIPTION_ID }}
-      # Start the Bicep validation
+      # Start the Bicep validation      
       - name: Azure Bicep validate what-if
         if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'  }}
         uses: azure/CLI@v1
@@ -46,7 +46,7 @@ jobs:
           inlineScript: |
             az bicep install
             deploytime=$(date +"%m-%d-%y-%H")
-            az deployment group what-if -g core-scepman-prod --name rollout-$deploytime -f bicep-deploy/main.bicep
+            az deployment group what-if -g yourrg --name rollout-$deploytime -f bicep-deploy-1/main.bicep
       - name: Azure Bicep Create via azcli
         id: scepmanbicepdeploy
         if: ${{ github.event_name == 'push' }}
@@ -55,10 +55,6 @@ jobs:
           azcliversion: latest
           inlineScript: |
             deploytime=$(date +"%m-%d-%y-%H")
-            az deployment group Create -g core-scepman-prod --name rollout-$deploytime -f bicep-deploy/main.bicep
-       # Run post config scripts only if above step is success     
-#      - name: Run post configuraiton steps
-#        if:  steps.scepmanbicepdeploy.outcome == 'success' && github.event_name != 'pull_request'
-#        run: |
-#          extra-config/scepman.ps1
-#        shell: pwsh
+            az deployment group Create -g yourrg --name rollout-$deploytime -f bicep-deploy-1/main.bicep
+# You need to change to your resource group (yourrg) and bicep-deploy-1, bicep-deploy-2 or to bicep-deploy-3 depending on your deployment.
+# Or just create your own deployment and copy what you need from my repo.

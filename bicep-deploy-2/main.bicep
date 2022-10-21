@@ -51,6 +51,11 @@ param caKeyType string = 'RSA-HSM'
 param SCEPman_actionGroups string = 'SCEPman-Health-probe'
 param SCEPman_Health_check_alarm string = 'SCEPman-Health-check-alerting'
 
+@description('Application Insight')
+param scepman_in_name string = 'ai-scepman-in'
+// Use an exsisting log analytics workspace or create a new.
+param workspace_id string = '/subscriptions/347c07c5-65f2-47dc-bb87-f3456120269a/resourcegroups/defaultresourcegroup-weu/providers/microsoft.operationalinsights/workspaces/defaultworkspace-347c07c5-65f2-47dc-bb87-f3456120269a-weu'
+
 @description('Here Resource creation begin')
 module SCEPmanWebApp 'Modules/SCEPmanAppServices.bicep' = {
   name: 'SCEPmanWebApp'
@@ -68,6 +73,8 @@ module SCEPmanWebApp 'Modules/SCEPmanAppServices.bicep' = {
     tags: tags
     caKeyType: caKeyType
     autoscalesettings_asp_scepman_name: autoscalesettings_asp_scepman_name
+    InstrumentationKey: SCEPmanAppServiceAi.outputs.InstrumentationKey
+    ConnectionString: SCEPmanAppServiceAi.outputs.ConnectionString
   }
 }
 
@@ -110,4 +117,13 @@ module AlarmPrimaryAppService 'Modules/AlarmAppService.bicep' = {
     SCEPman_ActionGroups_Id: SCEPmanActionGroup.outputs.ActionId
     AppServicid: SCEPmanWebApp.outputs.SCEPmanAppServicid
   }
+}
+
+module SCEPmanAppServiceAi 'Modules/SCEPmanAppServiceAi.bicep' = {
+  name: scepman_in_name
+  params: {
+    scepman_in_name: scepman_in_name
+    workspaceid: workspace_id
+    location: location
+  }  
 }
