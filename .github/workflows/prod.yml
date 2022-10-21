@@ -1,0 +1,64 @@
+# This is a basic workflow to help you get started with Actions
+
+name: deploy-prod
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+  pull_request: #workflow_dispatch:  
+    paths:
+     - 'bicep-deploy/**'
+    types: [opened, reopened, edited, synchronize]
+    branches:    
+      - 'main'
+  push:
+    paths:
+     - 'bicep-deploy/**'
+    branches:    
+      - 'main'
+
+
+permissions:
+      id-token: write
+      contents: read
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "Bicep-Whatif-OR-Create"
+  Bicep-Whatif-OR-Create:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Login to Azure
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_PROD_SUBSCRIPTION_ID }}
+      # Start the Bicep validation
+      - name: Azure Bicep validate what-if
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'  }}
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az bicep install
+            deploytime=$(date +"%m-%d-%y-%H")
+            az deployment group what-if -g core-scepman-prod --name rollout-$deploytime -f bicep-deploy/main.bicep
+      - name: Azure Bicep Create via azcli
+        id: scepmanbicepdeploy
+        if: ${{ github.event_name == 'push' }}
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            deploytime=$(date +"%m-%d-%y-%H")
+            az deployment group Create -g core-scepman-prod --name rollout-$deploytime -f bicep-deploy/main.bicep
+       # Run post config scripts only if above step is success     
+#      - name: Run post configuraiton steps
+#        if:  steps.scepmanbicepdeploy.outcome == 'success' && github.event_name != 'pull_request'
+#        run: |
+#          extra-config/scepman.ps1
+#        shell: pwsh

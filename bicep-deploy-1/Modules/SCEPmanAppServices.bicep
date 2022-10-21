@@ -65,9 +65,9 @@ resource SCEPmanAppServiceconfig 'Microsoft.Web/sites/config@2022-03-01' = {
   kind: 'string'
   parent: SCEPmanAppService
   properties: {
-    /*'AppConfig:AuthConfig:ApplicationId': '819bf9b3-c8c8-4264-a524-76d58942001a'
+    /*'AppConfig:AuthConfig:ApplicationId': ''
     'AppConfig:AuthConfig:ManagedIdentityEnabledForWebsiteHostname': '${AppServiceName}.azurewebsites.net'
-    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': '1666340254'
+    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': ''
     'AppConfig:AuthConfig:ManagedIdentityPermissionLevel': '2' */ // 
     'AppConfig:AuthConfig:TenantId': subscription().tenantId
     'AppConfig:AzureStorage:TableStorageEndpoint': TableStorageEndpoint
@@ -114,10 +114,10 @@ resource SCEPmanAppServiceconfigCm 'Microsoft.Web/sites/config@2022-03-01' = {
   kind: 'string'
   parent: SCEPmanAppServiceCm
   properties: {
-    /*'AppConfig:AuthConfig:ApplicationId': 'b55e6f9c-58e2-4920-9b5f-882f979e4bb5'
-    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': '1666340249'
+    /*'AppConfig:AuthConfig:ApplicationId': ''
+    'AppConfig:AuthConfig:ManagedIdentityEnabledOnUnixTime': ''
     'AppConfig:AuthConfig:ManagedIdentityPermissionLevel': '2'
-    'AppConfig:AuthConfig:SCEPmanAPIScope': 'api://819bf9b3-c8c8-4264-a524-76d58942001a' */ //
+    'AppConfig:AuthConfig:SCEPmanAPIScope': '' */ //
     'AppConfig:AuthConfig:TenantId': subscription().tenantId
     'AppConfig:AzureStorage:TableStorageEndpoint': TableStorageEndpoint
     'AppConfig:SCEPman:URL': 'https://${AppServiceName}.azurewebsites.net/'
