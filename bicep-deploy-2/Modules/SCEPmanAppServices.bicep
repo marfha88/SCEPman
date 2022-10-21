@@ -9,6 +9,7 @@ param tags object
 param appServicePlanName string
 param skuName string
 param skuCapacity int
+param autoscalesettings_asp_scepman_name string
 
 
 // appService
@@ -39,6 +40,76 @@ resource SCEPmanAppServicesplan 'Microsoft.Web/serverfarms@2022-03-01' = {
     name: skuName
   }
 }
+
+@description('Autoscale is created here')
+resource autoscalesettings_asp_scepman 'microsoft.insights/autoscalesettings@2021-05-01-preview' = {
+  location: location
+  name: autoscalesettings_asp_scepman_name
+  properties: {
+    enabled: true
+    name: autoscalesettings_asp_scepman_name
+    notifications: []
+    predictiveAutoscalePolicy: {
+      scaleMode: 'Disabled'
+    }
+    profiles: [
+      {
+        capacity: {
+          default: '1'
+          maximum: '10'
+          minimum: '1'
+        }
+        name: 'Auto created scale condition'
+        rules: [
+          {
+            metricTrigger: {
+              dimensions: []
+              dividePerInstance: true
+              metricName: 'CpuPercentage'
+              metricNamespace: 'microsoft.web/serverfarms'
+              metricResourceUri: SCEPmanAppServicesplan.id
+              operator: 'GreaterThan'
+              statistic: 'Average'
+              threshold: 70
+              timeAggregation: 'Average'
+              timeGrain: 'PT1M'
+              timeWindow: 'PT10M'
+            }
+            scaleAction: {
+              cooldown: 'PT15M'
+              direction: 'Increase'
+              type: 'ChangeCount'
+              value: '1'
+            }
+          }
+          {
+            metricTrigger: {
+              dimensions: []
+              dividePerInstance: true
+              metricName: 'CpuPercentage'
+              metricNamespace: 'microsoft.web/serverfarms'
+              metricResourceUri: SCEPmanAppServicesplan.id
+              operator: 'LessThan'
+              statistic: 'Average'
+              threshold: 35
+              timeAggregation: 'Average'
+              timeGrain: 'PT1M'
+              timeWindow: 'PT20M'
+            }
+            scaleAction: {
+              cooldown: 'PT30M'
+              direction: 'Decrease'
+              type: 'ChangeCount'
+              value: '1'
+            }
+          }
+        ]
+      }
+    ]
+    targetResourceUri: SCEPmanAppServicesplan.id
+  }
+}
+
 
 @description('SCEPmanAppService is created here')
 resource SCEPmanAppService 'Microsoft.Web/sites@2022-03-01' = {

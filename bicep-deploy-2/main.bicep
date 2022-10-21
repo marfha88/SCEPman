@@ -26,10 +26,12 @@ param license string = 'trial' // change to your license
 @description('Specifies the name of the Azure Key Vault. The name of a Key Vault must be globally unique and contain only DNS-compatible characters (letters, numbers, and hyphens).')
 param keyVaultName string = 'kv-scepman-${company}'
 
+
 @description(' AppService')
 param appServicePlanName string = 'asp-scepman-${company}'
 param skuName string = 'S1'
 param skuCapacity int = 1
+param autoscalesettings_asp_scepman_name string = 'asp-scepman-Autoscale'
 
 
 @description('The SCEPman  App Service and part of the default FQDN. Therefore, it must be globally unique and contain only DNS-compatible characters.')
@@ -44,7 +46,6 @@ param certificateMasterAppServiceName string = 'as-scepman-${company}-cm'
   'RSA-HSM'
 ])
 param caKeyType string = 'RSA-HSM'
-
 
 @description('Here Resource creation begin')
 module SCEPmanWebApp 'Modules/SCEPmanAppServices.bicep' = {
@@ -62,6 +63,7 @@ module SCEPmanWebApp 'Modules/SCEPmanAppServices.bicep' = {
     orgName: orgName
     tags: tags
     caKeyType: caKeyType
+    autoscalesettings_asp_scepman_name: autoscalesettings_asp_scepman_name
   }
 }
 
