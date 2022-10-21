@@ -1,0 +1,63 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "metricAlerts_SCEPman_Health_check_alerting_name": {
+            "defaultValue": "SCEPman Health check alerting",
+            "type": "String"
+        },
+        "sites_as_scepman_martin9_externalid": {
+            "defaultValue": "/subscriptions/347c07c5-65f2-47dc-bb87-f3456120269a/resourceGroups/scepman-prod/providers/Microsoft.Web/sites/as-scepman-martin9",
+            "type": "String"
+        },
+        "actionGroups_SCEPman_Health_probe_externalid": {
+            "defaultValue": "/subscriptions/347c07c5-65f2-47dc-bb87-f3456120269a/resourceGroups/scepman-prod/providers/microsoft.insights/actionGroups/SCEPman Health probe",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "microsoft.insights/metricAlerts",
+            "apiVersion": "2018-03-01",
+            "name": "[parameters('metricAlerts_SCEPman_Health_check_alerting_name')]",
+            "location": "global",
+            "properties": {
+                "severity": 0,
+                "enabled": true,
+                "scopes": [
+                    "[parameters('sites_as_scepman_martin9_externalid')]"
+                ],
+                "evaluationFrequency": "PT15M",
+                "windowSize": "PT15M",
+                "criteria": {
+                    "allOf": [
+                        {
+                            "alertSensitivity": "High",
+                            "failingPeriods": {
+                                "numberOfEvaluationPeriods": 4,
+                                "minFailingPeriodsToAlert": 4
+                            },
+                            "name": "Metric1",
+                            "metricNamespace": "Microsoft.Web/sites",
+                            "metricName": "HealthCheckStatus",
+                            "operator": "GreaterOrLessThan",
+                            "timeAggregation": "Average",
+                            "criterionType": "DynamicThresholdCriterion"
+                        }
+                    ],
+                    "odata.type": "Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria"
+                },
+                "autoMitigate": true,
+                "targetResourceType": "Microsoft.Web/sites",
+                "targetResourceRegion": "westeurope",
+                "actions": [
+                    {
+                        "actionGroupId": "[parameters('actionGroups_SCEPman_Health_probe_externalid')]",
+                        "webHookProperties": {}
+                    }
+                ]
+            }
+        }
+    ]
+}

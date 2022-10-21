@@ -47,6 +47,10 @@ param certificateMasterAppServiceName string = 'as-scepman-${company}-cm'
 ])
 param caKeyType string = 'RSA-HSM'
 
+@description('SCEPman Alarm and Action Group')
+param SCEPman_actionGroups string = 'SCEPman-Health-probe'
+param SCEPman_Health_check_alarm string = 'SCEPman-Health-check-alerting'
+
 @description('Here Resource creation begin')
 module SCEPmanWebApp 'Modules/SCEPmanAppServices.bicep' = {
   name: 'SCEPmanWebApp'
@@ -89,5 +93,21 @@ module SCEPmanVault 'Modules/SCEPmanVault.bicep' = {
     AppServicspid: SCEPmanWebApp.outputs.SCEPmanAppServicespid
     location: location
     tags: tags
+  }
+}
+
+module SCEPmanActionGroup 'Modules/SCEPmanActionGroup.bicep' = {
+  name: 'SCEPmanActionGroup'
+  params: {
+    SCEPman_actionGroups: SCEPman_actionGroups
+  }
+}
+
+module AlarmPrimaryAppService 'Modules/AlarmAppService.bicep' = {
+  name: SCEPman_Health_check_alarm
+  params: {
+    SCEPman_Health_check_alarm: SCEPman_Health_check_alarm
+    SCEPman_ActionGroups_Id: SCEPmanActionGroup.outputs.ActionId
+    AppServicid: SCEPmanWebApp.outputs.SCEPmanAppServicid
   }
 }

@@ -130,6 +130,15 @@ resource SCEPmanAppService 'Microsoft.Web/sites@2022-03-01' = {
   tags: tags
 }
 
+@description('Health proble for SCEPman webapp')
+resource SCEPmanAppServicehealth 'Microsoft.Web/sites/config@2021-03-01' = {
+  name: 'web'
+  parent: SCEPmanAppService
+  properties: {
+    healthCheckPath: '/probe'
+  }
+}
+
 @description('App config')
 resource SCEPmanAppServiceconfig 'Microsoft.Web/sites/config@2022-03-01' = {
   name: 'appsettings'
