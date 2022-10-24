@@ -58,9 +58,9 @@ resource autoscalesettings_asp_scepman 'microsoft.insights/autoscalesettings@202
     profiles: [
       {
         capacity: {
-          default: '1'
+          default: '2'
           maximum: '10'
-          minimum: '1'
+          minimum: '2'
         }
         name: 'Auto created scale condition'
         rules: [
