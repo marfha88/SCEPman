@@ -46,7 +46,7 @@ jobs:
           inlineScript: |
             az bicep install
             deploytime=$(date +"%m-%d-%y-%H")
-            az deployment group what-if -g yourrg --name rollout-$deploytime -f bicep-deploy-1/main.bicep
+            az deployment group what-if -g scepman-prod --name rollout-$deploytime -f bicep-deploy-3/main.bicep
       - name: Azure Bicep Create via azcli
         id: scepmanbicepdeploy
         if: ${{ github.event_name == 'push' }}
@@ -55,6 +55,6 @@ jobs:
           azcliversion: latest
           inlineScript: |
             deploytime=$(date +"%m-%d-%y-%H")
-            az deployment group Create -g yourrg --name rollout-$deploytime -f bicep-deploy-1/main.bicep
+            az deployment group Create -g scepman-prod --name rollout-$deploytime -f bicep-deploy-3/main.bicep
 # You need to change to your resource group (yourrg) and bicep-deploy-1, bicep-deploy-2 or to bicep-deploy-3 depending on your deployment.
 # Or just create your own deployment and copy what you need from my repo.

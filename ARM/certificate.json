@@ -1,0 +1,44 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "type": "string"
+        },
+        "resourceGroup": {
+            "type": "string"
+        },
+        "certificateOrderName": {
+            "type": "string"
+        },
+        "distinguishedName": {
+            "type": "string"
+        },
+        "productType": {
+            "type": "string",
+            "allowedValues": [
+                "StandardDomainValidatedSsl",
+                "StandardDomainValidatedWildCardSsl"
+            ],
+            "defaultValue": "StandardDomainValidatedSsl"
+        },
+        "autoRenew": {
+            "type": "bool"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2022-03-01",
+            "name": "[parameters('certificateOrderName')]",
+            "type": "Microsoft.CertificateRegistration/certificateOrders",
+            "location": "global",
+            "tags": {},
+            "properties": {
+                "autoRenew": "[parameters('autoRenew')]",
+                "distinguishedName": "[parameters('distinguishedName')]",
+                "validityInYears": 1,
+                "productType": "[parameters('productType')]"
+            }
+        }
+    ]
+}
