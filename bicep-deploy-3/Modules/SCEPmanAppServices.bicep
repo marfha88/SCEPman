@@ -32,6 +32,9 @@ var KeyVaultURL = 'https://${keyVaultName}${environment().suffixes.keyvaultDns}/
 param InstrumentationKey string
 param ConnectionString string
 
+// Certificate
+param thumbprint string
+
 //######################################################### Here Resource creation begin test #####################################################
 @description('SCEPmanAppServicesplan is created here')
 resource SCEPmanAppServicesplan 'Microsoft.Web/serverfarms@2022-03-01' = {
@@ -129,8 +132,27 @@ resource SCEPmanAppService 'Microsoft.Web/sites@2022-03-01' = {
       use32BitWorkerProcess: false
       ftpsState: 'Disabled'
     }
+    hostNameSslStates: [
+      {
+        name: 'scepman.fahlbeck.no'
+        sslState: 'SniEnabled'
+        thumbprint: thumbprint
+        hostType: 'Standard'
+      }
+    ]
   }  
   tags: tags
+}
+
+@description('Certificate binding')
+resource scepmanin_hostNameBinding 'Microsoft.Web/sites/hostNameBindings@2021-03-01' = {
+  parent: SCEPmanAppService
+  name: 'scepman.fahlbeck.no'
+  properties: {
+    siteName: AppServiceName
+    sslState: 'SniEnabled'
+    thumbprint: thumbprint
+  }
 }
 
 @description('Health proble for SCEPman webapp')

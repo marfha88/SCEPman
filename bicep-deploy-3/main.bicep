@@ -26,7 +26,6 @@ param license string = 'trial' // change to your license
 @description('Specifies the name of the Azure Key Vault. The name of a Key Vault must be globally unique and contain only DNS-compatible characters (letters, numbers, and hyphens).')
 param keyVaultName string = 'kv-scepman-${company}'
 
-
 @description(' AppService')
 param appServicePlanName string = 'asp-scepman-${company}'
 param skuName string = 'S1'
@@ -56,6 +55,9 @@ param scepman_in_name string = 'ai-scepman-in'
 // Use an exsisting log analytics workspace or create a new.
 param workspace_id string = '/subscriptions/347c07c5-65f2-47dc-bb87-f3456120269a/resourcegroups/defaultresourcegroup-weu/providers/microsoft.operationalinsights/workspaces/defaultworkspace-347c07c5-65f2-47dc-bb87-f3456120269a-weu'
 
+@description('SCEPman HTTPS certificates')
+param SCEPman_certificates__name string = 'SCEPmanHTTPS'
+
 @description('Here Resource creation begin')
 module SCEPmanWebApp 'Modules/SCEPmanAppServices.bicep' = {
   name: 'SCEPmanWebApp'
@@ -75,6 +77,7 @@ module SCEPmanWebApp 'Modules/SCEPmanAppServices.bicep' = {
     autoscalesettings_asp_scepman_name: autoscalesettings_asp_scepman_name
     InstrumentationKey: SCEPmanAppServiceAi.outputs.InstrumentationKey
     ConnectionString: SCEPmanAppServiceAi.outputs.ConnectionString
+    thumbprint: SCEPman_HTTPS_Certificate.outputs.thumbprint
   }
 }
 
@@ -126,4 +129,12 @@ module SCEPmanAppServiceAi 'Modules/SCEPmanAppServiceAi.bicep' = {
     workspaceid: workspace_id
     location: location
   }  
+}
+
+module SCEPman_HTTPS_Certificate 'Modules/SCEPmanCert.bicep' = {
+  name: SCEPman_certificates__name
+  params: {
+    location: location
+    SCEPman_certificates__name: SCEPman_certificates__name
+  }
 }
