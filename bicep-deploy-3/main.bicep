@@ -77,7 +77,7 @@ module SCEPmanWebApp 'Modules/SCEPmanAppServices.bicep' = {
     autoscalesettings_asp_scepman_name: autoscalesettings_asp_scepman_name
     InstrumentationKey: SCEPmanAppServiceAi.outputs.InstrumentationKey
     ConnectionString: SCEPmanAppServiceAi.outputs.ConnectionString
-    thumbprint: SCEPman_HTTPS_Certificate.outputs.thumbprint
+    //thumbprint: SCEPman_HTTPS_Certificate.outputs.thumbprint
   }
 }
 
@@ -130,7 +130,7 @@ module SCEPmanAppServiceAi 'Modules/SCEPmanAppServiceAi.bicep' = {
     location: location
   }  
 }
-
+/*
 module SCEPman_HTTPS_Certificate 'Modules/SCEPmanCert.bicep' = {
   name: SCEPman_certificates__name
   params: {
@@ -138,3 +138,4 @@ module SCEPman_HTTPS_Certificate 'Modules/SCEPmanCert.bicep' = {
     SCEPman_certificates__name: SCEPman_certificates__name
   }
 }
+*/
