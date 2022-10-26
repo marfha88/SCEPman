@@ -1,19 +1,19 @@
-# This is a basic workflow to help you get started with Actions
+# This is a basic workflow to help you get started with github Actions
 
-name: scepman-deploy
+name: bicep-deploy
 
 # Controls when the workflow will run
 on:
   workflow_dispatch:
   pull_request: 
     paths:
-     - 'bicep-deploy-3/**'
+     - 'bicep-deploy-3/**' ## Change this to your deployment where your files is located
     types: [opened, reopened, edited, synchronize]
     branches:    
       - 'main'
   push:
     paths:
-     - 'bicep-deploy-3/**'
+     - 'bicep-deploy-3/**' ## Change this to your deployment where your files is located
     branches:    
       - 'main'
 
@@ -29,8 +29,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      # Login to Azure
+      - uses: actions/checkout@v2      
       - name: Azure Login
         uses: azure/login@v1
         with:
@@ -39,7 +38,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       # Start the Bicep validation      
       - name: Azure Bicep validate what-if
-        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'  }} # Here we run the what-if on a Pull request or manualy from Github
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'  }} # Here we run the what-if on a Pull request or manualy from Github Action
         uses: azure/CLI@v1
         with:
           azcliversion: latest
@@ -49,7 +48,7 @@ jobs:
             az deployment group what-if -g scepman-prod --name rollout-$deploytime -f bicep-deploy-3/main.bicep
       - name: Azure Bicep Create via azcli
         id: scepmanbicepdeploy
-        if: ${{ github.event_name == 'push' }} # Here we run the create when we push the code to the main branch.
+        if: ${{ github.event_name == 'push' }} # Here we run the bicep create when we push the code to the main branch.
         uses: azure/CLI@v1
         with:
           azcliversion: latest
@@ -57,4 +56,4 @@ jobs:
             deploytime=$(date +"%m-%d-%y-%H")
             az deployment group Create -g scepman-prod --name rollout-$deploytime -f bicep-deploy-3/main.bicep
 # You need to change to your resource group (yourrg) and bicep-deploy-1, bicep-deploy-2 or to bicep-deploy-3 depending on your deployment.
-# Or just create your own deployment and copy what you need from my repo.
+# Or just create your own deployment and copy what you need from this repo.
