@@ -18,7 +18,7 @@
                 "deployment": "bicep",
                 "createdby": "Martin",
                 "SCEPmanVersion": "2.2.631",
-                "updatedTime": "20221026T0727"
+                "updatedTime": "20221026T1156"
             },
             "properties": {
                 "sku": {
@@ -31,45 +31,137 @@
                         "tenantId": "89c966d0-fc62-4a30-b104-cfcba0b97b07",
                         "objectId": "ac43446b-2bd9-4893-ac11-814bceb4be8f",
                         "permissions": {
-                            "certificates": [
-                                "get",
-                                "list",
-                                "update",
-                                "create",
-                                "import",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore",
-                                "managecontacts",
-                                "manageissuers",
-                                "getissuers",
-                                "listissuers",
-                                "setissuers",
-                                "deleteissuers"
-                            ],
                             "keys": [
-                                "get",
-                                "list",
-                                "update",
-                                "create",
-                                "import",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore",
-                                "unwrapKey",
-                                "verify",
-                                "sign"
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "UnwrapKey",
+                                "Verify",
+                                "Sign"
                             ],
                             "secrets": [
-                                "get",
-                                "list",
-                                "set",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore"
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    },
+                    {
+                        "tenantId": "89c966d0-fc62-4a30-b104-cfcba0b97b07",
+                        "objectId": "57de4656-cc03-4872-826e-8fe5aa2f5f1b",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "UnwrapKey",
+                                "Verify",
+                                "Sign"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    },
+                    {
+                        "tenantId": "89c966d0-fc62-4a30-b104-cfcba0b97b07",
+                        "objectId": "ab12d451-c89f-41e4-9c70-6abe38f72fc9",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "UnwrapKey",
+                                "Verify",
+                                "Sign"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
                             ]
                         }
                     },
@@ -78,44 +170,44 @@
                         "objectId": "8fd7d728-52e2-416f-a629-9dfab2545715",
                         "permissions": {
                             "certificates": [
-                                "get",
-                                "list",
-                                "update",
-                                "create",
-                                "import",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore",
-                                "managecontacts",
-                                "manageissuers",
-                                "getissuers",
-                                "listissuers",
-                                "setissuers",
-                                "deleteissuers"
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
                             ],
                             "keys": [
-                                "get",
-                                "list",
-                                "update",
-                                "create",
-                                "import",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore",
-                                "unwrapKey",
-                                "verify",
-                                "sign"
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "GetRotationPolicy",
+                                "SetRotationPolicy",
+                                "Rotate"
                             ],
                             "secrets": [
-                                "get",
-                                "list",
-                                "set",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore"
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
                             ]
                         }
                     },
@@ -123,45 +215,11 @@
                         "tenantId": "89c966d0-fc62-4a30-b104-cfcba0b97b07",
                         "objectId": "2d4f47d5-87ff-4092-9b9c-2ed588ca6abc",
                         "permissions": {
-                            "certificates": [
-                                "get",
-                                "list",
-                                "update",
-                                "create",
-                                "import",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore",
-                                "managecontacts",
-                                "manageissuers",
-                                "getissuers",
-                                "listissuers",
-                                "setissuers",
-                                "deleteissuers"
-                            ],
-                            "keys": [
-                                "get",
-                                "list",
-                                "update",
-                                "create",
-                                "import",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore",
-                                "unwrapKey",
-                                "verify",
-                                "sign"
-                            ],
                             "secrets": [
-                                "get",
-                                "list",
-                                "set",
-                                "delete",
-                                "recover",
-                                "backup",
-                                "restore"
+                                "get"
+                            ],
+                            "certificates": [
+                                "get"
                             ]
                         }
                     }
