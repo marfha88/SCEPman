@@ -18,7 +18,7 @@ resource certificates_Scepman 'Microsoft.Web/certificates@2021-03-01' = {
 }
 
 output thumbprint string = certificates_Scepman.properties.thumbprint
-
+output Subject_Alternative_Name string = certificates_Scepman.properties.subjectName
 
 
 
