@@ -33,7 +33,7 @@ param InstrumentationKey string
 param ConnectionString string
 
 // Certificate
-// param thumbprint string
+param thumbprint string
 
 //######################################################### Here Resource creation begin test #####################################################
 @description('SCEPmanAppServicesplan is created here')
@@ -132,18 +132,18 @@ resource SCEPmanAppService 'Microsoft.Web/sites@2022-03-01' = {
       use32BitWorkerProcess: false
       ftpsState: 'Disabled'
     }
-  /*  hostNameSslStates: [
+    hostNameSslStates: [
       {
         name: 'scepman.fahlbeck.no'
         sslState: 'SniEnabled'
         thumbprint: thumbprint
         hostType: 'Standard'
       }
-    ]*/
+    ]
   }  
   tags: tags
 }
-/*
+
 @description('Certificate binding')
 resource scepmanin_hostNameBinding 'Microsoft.Web/sites/hostNameBindings@2021-03-01' = {
   parent: SCEPmanAppService
@@ -154,7 +154,7 @@ resource scepmanin_hostNameBinding 'Microsoft.Web/sites/hostNameBindings@2021-03
     thumbprint: thumbprint
   }
 }
-*/
+
 @description('Health proble for SCEPman webapp')
 resource SCEPmanAppServicehealth 'Microsoft.Web/sites/config@2021-03-01' = {
   name: 'web'

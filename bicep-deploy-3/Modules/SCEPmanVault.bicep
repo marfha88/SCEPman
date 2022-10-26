@@ -13,6 +13,7 @@ param ids array = [
   'ab12d451-c89f-41e4-9c70-6abe38f72fc9' // This is the "Microsoft Azure App Service" and you can find object id in Azure AD.
   '57de4656-cc03-4872-826e-8fe5aa2f5f1b' // your objectid, or add the service principle id that runs the Github Action.
   '8fd7d728-52e2-416f-a629-9dfab2545715' // this shold work
+  'abfa0a7c-a6b6-4736-8310-5855508787cd'
 ]
 
 resource SCEPmanVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
