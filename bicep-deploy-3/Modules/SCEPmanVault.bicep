@@ -11,6 +11,7 @@ param tags object
 param ids array = [
   AppServicspid
   '57de4656-cc03-4872-826e-8fe5aa2f5f1b' // your objectid, or add the service principle id that runs the Github Action.
+  '2d4f47d5-87ff-4092-9b9c-2ed588ca6abc' 
   'ab12d451-c89f-41e4-9c70-6abe38f72fc9' // This is the "Microsoft Azure App Service" and you can find object id in Azure AD.
 ]
 
