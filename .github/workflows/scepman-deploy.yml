@@ -5,7 +5,7 @@ name: scepman-deploy
 # Controls when the workflow will run
 on:
   workflow_dispatch:
-  pull_request: #workflow_dispatch:  
+  pull_request: 
     paths:
      - 'bicep-deploy-3/**'
     types: [opened, reopened, edited, synchronize]
@@ -39,7 +39,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       # Start the Bicep validation      
       - name: Azure Bicep validate what-if
-        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'  }}
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'  }} # Here we run the what-if on a Pull request or manualy from Github
         uses: azure/CLI@v1
         with:
           azcliversion: latest
@@ -49,7 +49,7 @@ jobs:
             az deployment group what-if -g scepman-prod --name rollout-$deploytime -f bicep-deploy-3/main.bicep
       - name: Azure Bicep Create via azcli
         id: scepmanbicepdeploy
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' }} # Here we run the create when we push the code to the main branch.
         uses: azure/CLI@v1
         with:
           azcliversion: latest
