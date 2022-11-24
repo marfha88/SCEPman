@@ -1,0 +1,59 @@
+# This is a basic workflow to help you get started with github Actions
+
+name: bicep-deploy
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+  pull_request: 
+    paths:
+     - 'bicep-deploy-1/**' ## Change this to your deployment where your files is located
+    types: [opened, reopened, edited, synchronize]
+    branches:    
+      - 'main'
+  push:
+    paths:
+     - 'bicep-deploy-1/**' ## Change this to your deployment where your files is located
+    branches:    
+      - 'main'
+
+
+permissions:
+      id-token: write
+      contents: read
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "Bicep-Whatif-OR-Create"
+  Bicep-Whatif-OR-Create:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      # Start the Bicep validation      
+      - name: Azure Bicep validate what-if
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'  }} # Here we run the what-if on a Pull request or manualy from Github Action
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az bicep install
+            deploytime=$(date +"%m-%d-%y-%H")
+            az deployment group what-if -g yourrg --name rollout-$deploytime -f bicep-deploy-1/main.bicep
+      - name: Azure Bicep Create via azcli
+        id: scepmanbicepdeploy
+        if: ${{ github.event_name == 'push' }} # Here we run the bicep create when we push the code to the main branch.
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            deploytime=$(date +"%m-%d-%y-%H")
+            az deployment group Create -g yourrg --name rollout-$deploytime -f bicep-deploy-1/main.bicep
+# You need to change to your resource group (yourrg) and bicep-deploy-1, bicep-deploy-2 or to bicep-deploy-1 depending on your deployment.
+# Or just create your own deployment and copy what you need from this repo.
